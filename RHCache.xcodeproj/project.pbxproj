@@ -58,6 +58,7 @@
 		00431D1D1658B0B500D289E6 /* RHCacheEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RHCacheEntry.h; sourceTree = "<group>"; };
 		00431D1E1658B0B500D289E6 /* RHCacheEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RHCacheEntry.m; sourceTree = "<group>"; };
 		94A442871659AA27001349D8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		94A442891659D94E001349D8 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +87,7 @@
 		00431CE71658B07600D289E6 = {
 			isa = PBXGroup;
 			children = (
+				94A442891659D94E001349D8 /* LICENSE */,
 				94A442871659AA27001349D8 /* README.md */,
 				00431CF71658B07600D289E6 /* RHCache */,
 				00431D0C1658B07700D289E6 /* RHCacheTests */,
