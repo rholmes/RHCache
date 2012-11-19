@@ -33,3 +33,8 @@ There is no static library or podspec yet, so just copy the following files into
 - RHCache.m
 - RHCacheEntry.h
 - RHCacheEntry.m
+
+
+License
+----------
+All source code is licensed under the [MIT License](https://raw.github.com/rholmes/RHCache/master/LICENSE).
