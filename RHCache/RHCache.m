@@ -107,38 +107,47 @@
 
 - (NSArray *)allKeys
 {
-    return [_entries allKeys];
+    @synchronized(self) {
+        return [_entries allKeys];
+    }
 }
 
 - (NSArray *)allValues
 {
-    NSMutableArray *values = [NSMutableArray arrayWithCapacity:[_entries count]];
-    for (RHCacheEntry *entry in [_entries allValues]) {
-        [values addObject:[entry object]];
+    @synchronized(self) {
+        NSMutableArray *values = [NSMutableArray arrayWithCapacity:[_entries count]];
+        for (RHCacheEntry *entry in [_entries allValues]) {
+            [values addObject:[entry object]];
+        }
+        return values;
     }
-    return values;
 }
 
 - (void)removeObjectForKey:(id)key
 {
-    
-    RHCacheEntry *entry = [_entries objectForKey:key];
-    if (entry) {
-        [_entries removeObjectForKey:key];
-        [_entriesByTime removeObjectIdenticalTo:entry];
+    @synchronized(self) {
+        RHCacheEntry *entry = [_entries objectForKey:key];
+        if (entry) {
+            [_entries removeObjectForKey:key];
+            [_entriesByTime removeObjectIdenticalTo:entry];
+        }
     }
 }
 
 
 - (void)removeAllObjects
 {
-    [_entries removeAllObjects];
-    [_entriesByTime removeAllObjects];
+    @synchronized(self) {
+        [_entries removeAllObjects];
+        [_entriesByTime removeAllObjects];
+    }
 }
 
 - (NSUInteger)count
 {
-    return [_entries count];
+    @synchronized(self) {
+        return [_entries count];
+    }
 }
 
 
@@ -148,18 +157,19 @@
         return;
     }
     
-    NSUInteger count = [_entriesByTime count];
-    if (count == 0) {
-        return;
+    @synchronized(self) {
+        NSUInteger count = [_entriesByTime count];
+        if (count == 0) {
+            return;
+        }
+        
+        // Remove oldest entries that exceed the count limit
+        for (NSUInteger i = count; i > _countLimit; i--) {
+            RHCacheEntry *entry = [_entriesByTime objectAtIndex:0];
+            [_entries removeObjectForKey:[entry key]];
+            [_entriesByTime removeObjectAtIndex:0];
+        }
     }
-    
-    // Remove oldest entries that exceed the count limit
-    for (NSUInteger i = count; i > _countLimit; i--) {
-        RHCacheEntry *entry = [_entriesByTime objectAtIndex:0];
-        [_entries removeObjectForKey:[entry key]];
-        [_entriesByTime removeObjectAtIndex:0];
-    }
-    
 }
 
 - (BOOL)isTimeToLiveExpiredForEntry:(RHCacheEntry *)entry
