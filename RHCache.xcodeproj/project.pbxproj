@@ -11,7 +11,6 @@
 		00431CFB1658B07600D289E6 /* RHCache.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 00431CFA1658B07600D289E6 /* RHCache.h */; };
 		00431CFD1658B07600D289E6 /* RHCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 00431CFC1658B07600D289E6 /* RHCache.m */; };
 		00431D051658B07700D289E6 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00431D041658B07700D289E6 /* SenTestingKit.framework */; };
-		00431D071658B07700D289E6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00431D061658B07700D289E6 /* UIKit.framework */; };
 		00431D081658B07700D289E6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00431CF51658B07600D289E6 /* Foundation.framework */; };
 		00431D0B1658B07700D289E6 /* libRHCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00431CF21658B07600D289E6 /* libRHCache.a */; };
 		00431D111658B07700D289E6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 00431D0F1658B07700D289E6 /* InfoPlist.strings */; };
@@ -50,7 +49,6 @@
 		00431CFC1658B07600D289E6 /* RHCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RHCache.m; sourceTree = "<group>"; };
 		00431D031658B07700D289E6 /* RHCacheTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RHCacheTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00431D041658B07700D289E6 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		00431D061658B07700D289E6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		00431D0E1658B07700D289E6 /* RHCacheTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RHCacheTests-Info.plist"; sourceTree = "<group>"; };
 		00431D101658B07700D289E6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		00431D121658B07700D289E6 /* RHCacheTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RHCacheTests.h; sourceTree = "<group>"; };
@@ -75,7 +73,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				00431D051658B07700D289E6 /* SenTestingKit.framework in Frameworks */,
-				00431D071658B07700D289E6 /* UIKit.framework in Frameworks */,
 				00431D081658B07700D289E6 /* Foundation.framework in Frameworks */,
 				00431D0B1658B07700D289E6 /* libRHCache.a in Frameworks */,
 			);
@@ -110,7 +107,6 @@
 			children = (
 				00431CF51658B07600D289E6 /* Foundation.framework */,
 				00431D041658B07700D289E6 /* SenTestingKit.framework */,
-				00431D061658B07700D289E6 /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

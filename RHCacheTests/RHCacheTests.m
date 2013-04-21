@@ -9,6 +9,32 @@
 #import "RHCacheTests.h"
 #import "RHCache.h"
 
+@interface RHConfigurableCacheDelegate : NSObject<RHCacheDelegate>
+
+@property (nonatomic) BOOL evictionPolicy;
+
+- (id)initWithEvictionPolicy:(BOOL)evictionPolicy;
+
+@end
+
+@implementation RHConfigurableCacheDelegate
+
+- (id)initWithEvictionPolicy:(BOOL)evictionPolicy
+{
+    self = [super init];
+    if (self) {
+         _evictionPolicy = evictionPolicy;
+    }
+    return self;
+}
+
+- (BOOL)cache:(RHCache *)cache shouldEvictObject:(id)obj withKey:(id)key
+{
+    return self.evictionPolicy;
+}
+
+@end
+
 @implementation RHCacheTests
 
 - (void)setUp
@@ -61,21 +87,54 @@
 }
 
 
-- (void)testCountLimit
+- (void)testCountLimitWithEvictingDelegate
 {
     NSUInteger countLimit = 2;
     
     RHCache *cache = [[RHCache alloc] initWithCountLimit:countLimit];
+    RHConfigurableCacheDelegate *delegate = [[RHConfigurableCacheDelegate alloc] initWithEvictionPolicy:YES];
+    cache.delegate = delegate;
+    
+    // add entries up to count limit
     [cache setObject:@"value1" forKey:@"key1"];
     [cache setObject:@"value2" forKey:@"key2"];
     
     // check count before eviction
     STAssertEquals([cache count], countLimit, @"Cache count should be 2");
     
-    // add object exceeding count limit
+    // add objects exceeding count limit
     [cache setObject:@"value3" forKey:@"key3"];
+    [cache setObject:@"value4" forKey:@"key4"];
     STAssertEquals([cache count], countLimit, @"Cache count should be 2");
+    
+    // keep delegate in scope so it doesn't get deallocated above
+    delegate = nil;
 }
+
+- (void)testCountLimitWithNonEvictingDelegate
+{
+    NSUInteger countLimit = 2;
+    
+    RHCache *cache = [[RHCache alloc] initWithCountLimit:countLimit];
+    RHConfigurableCacheDelegate *delegate = [[RHConfigurableCacheDelegate alloc] initWithEvictionPolicy:NO];
+    cache.delegate = delegate;    
+    
+    // add entries up to count limit
+    [cache setObject:@"value1" forKey:@"key1"];
+    [cache setObject:@"value2" forKey:@"key2"];
+    
+    // check count before eviction
+    STAssertEquals([cache count], countLimit, @"Cache count should be 2");
+    
+    // add objects exceeding count limit
+    [cache setObject:@"value3" forKey:@"key3"];
+    [cache setObject:@"value4" forKey:@"key4"];
+    STAssertEquals([cache count], 4U, @"Cache count should be 4");
+    
+    // keep delegate in scope so it doesn't get deallocated above
+    delegate = nil;
+}
+
 
 - (void)testTimeToLive
 {

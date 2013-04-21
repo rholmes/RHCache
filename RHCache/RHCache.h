@@ -8,11 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol RHCacheDelegate;
+
 @interface RHCache : NSObject
 
 @property (nonatomic, assign, readwrite) NSUInteger countLimit;
 @property (nonatomic, assign, readwrite) NSTimeInterval timeToLive;
 @property (nonatomic, assign, readwrite) NSTimeInterval timeToIdle;
+@property (nonatomic, weak) id<RHCacheDelegate> delegate;
 
 - (id)initWithCountLimit:(NSUInteger)limit;
 - (id)initWithCountLimit:(NSUInteger)limit timeToLive:(NSTimeInterval)timeToLive timeToIdle:(NSTimeInterval)timeToIdle;
@@ -23,5 +26,12 @@
 - (void)removeObjectForKey:(id)key;
 - (void)removeAllObjects;
 - (NSUInteger)count;
+
+@end
+
+@protocol RHCacheDelegate <NSObject>
+
+@optional
+- (BOOL)cache:(RHCache *)cache shouldEvictObject:(id)obj withKey:(id)key;
 
 @end

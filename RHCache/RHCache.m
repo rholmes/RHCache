@@ -14,10 +14,6 @@
 @property (strong, nonatomic) NSMutableDictionary *entries;
 @property (strong, nonatomic) NSMutableArray *entriesByTime;
 
-- (void)evictObjectsExceedingCountLimit;
-- (BOOL)isTimeToLiveExpiredForEntry:(RHCacheEntry *)entry;
-- (BOOL)isTimeToIdleExpiredForEntry:(RHCacheEntry *)entry;
-
 @end
 
 @implementation RHCache
@@ -49,6 +45,8 @@
 }
 
 
+#pragma mark - Public API 
+
 - (id)objectForKey:(id)key
 {
     if (!key) {
@@ -64,9 +62,10 @@
         
         // Has the entry exceeded the time to live or time to idle?
         if ([self isTimeToLiveExpiredForEntry:entry] || [self isTimeToIdleExpiredForEntry:entry]) {
-            // Entry is expired; remove it and return nil
-            [self removeObjectForKey:key];
-            return nil;
+            // Entry is expired; try to evict it
+            if ([self evictCacheEntry:entry]) {
+                return nil;
+            }
         }
         
         // Update the entry's last accessed time
@@ -150,6 +149,33 @@
     }
 }
 
+#pragma mark - Cache eviction
+
+- (BOOL)evictCacheEntryAtTimeIndex:(NSUInteger)timeIndex
+{
+    if (timeIndex >= [_entriesByTime count]) {
+        return NO;
+    }
+    
+    RHCacheEntry *entry = [_entriesByTime objectAtIndex:timeIndex];
+    BOOL evict = YES;
+    if ([self.delegate respondsToSelector:@selector(cache:shouldEvictObject:withKey:)]) {
+        evict = [self.delegate cache:self shouldEvictObject:entry.object withKey:entry.key];
+    }
+    
+    if (evict) {
+        [_entries removeObjectForKey:entry.key];
+        [_entriesByTime removeObjectAtIndex:timeIndex];
+    }
+    
+    return evict;
+}
+
+- (BOOL)evictCacheEntry:(RHCacheEntry *)entry
+{
+    NSUInteger timeIndex = [_entriesByTime indexOfObjectIdenticalTo:entry];
+    return [self evictCacheEntryAtTimeIndex:timeIndex];
+}
 
 - (void)evictObjectsExceedingCountLimit
 {
@@ -157,19 +183,26 @@
         return;
     }
     
-    @synchronized(self) {
-        NSUInteger count = [_entriesByTime count];
-        if (count == 0) {
-            return;
+    NSUInteger count = [_entriesByTime count];
+    if (count == 0) {
+        return;
+    }
+    
+    // Remove oldest entries that exceed the count limit
+    NSUInteger timeIndex = 0;
+    for (NSUInteger i = count; i > _countLimit; i--) {
+        BOOL evicted = [self evictCacheEntryAtTimeIndex:timeIndex];
+        if (evicted) {
+            continue;
         }
         
-        // Remove oldest entries that exceed the count limit
-        for (NSUInteger i = count; i > _countLimit; i--) {
-            RHCacheEntry *entry = [_entriesByTime objectAtIndex:0];
-            [_entries removeObjectForKey:[entry key]];
-            [_entriesByTime removeObjectAtIndex:0];
+        // The prior entry was not evicted, so try the next oldest entry
+        timeIndex++;
+        if (timeIndex >= count ) {
+            break;
         }
     }
+    
 }
 
 - (BOOL)isTimeToLiveExpiredForEntry:(RHCacheEntry *)entry
