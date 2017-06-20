@@ -333,6 +333,7 @@
 		00431D181658B07700D289E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DSTROOT = /tmp/RHCache.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RHCache/RHCache-Prefix.pch";
@@ -345,6 +346,7 @@
 		00431D191658B07700D289E6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DSTROOT = /tmp/RHCache.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RHCache/RHCache-Prefix.pch";
