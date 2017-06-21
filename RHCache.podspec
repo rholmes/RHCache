@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
     s.ios.deployment_target = '8.3'
     s.osx.deployment_target = '10.10'
 
-    s.ios.source_files = 'RHCache/**/*.{h,m}'
-    s.osx.source_files = 'RHCache/**/*.{h,m}'
-    s.source_files = 'RHCache/**/*.{h,m}'
+    s.ios.source_files = 'RHCache/RHCache/**/*.{h,m}'
+    s.osx.source_files = 'RHCache/RHCacheOSX/**/*.{h,m}'
+    s.source_files = 'RHCache/RHCache/**/*.{h,m}'
 end
