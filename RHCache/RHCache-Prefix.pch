@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'RHCache' target in the 'RHCache' project
-//
-
-#ifdef __OBJC__
-    #import <Foundation/Foundation.h>
-#endif

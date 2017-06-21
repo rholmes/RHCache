@@ -3,10 +3,11 @@
 //  RHCache
 //
 //  Created by rholmes on 11/17/12.
+//  Updated by mszaro on 06/20/17.
 //  Copyright (c) 2012 Ryan Holmes. All rights reserved.
 //
 
-#import "RHCache.h"
+#import "RHCacheImpl.h"
 #import "RHCacheEntry.h"
 
 @interface RHCache ()
@@ -227,5 +228,14 @@
     return (now - _timeToIdle) > [entry accessed];
 }
 
+#pragma mark Factory methods
++(instancetype) cacheWithCountLimit:(NSUInteger)countLimit {
+    return [[[self class] alloc] initWithCountLimit: countLimit];
+}
+
++(instancetype) cacheWithCountLimit:(NSUInteger)limit timeToLive:(NSTimeInterval)timeToLive timeToIdle:(NSTimeInterval)timeToIdle
+{
+    return [[[self class] alloc] initWithCountLimit: limit timeToLive: timeToLive timeToIdle:timeToIdle];
+}
 
 @end
