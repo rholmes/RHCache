@@ -7,7 +7,7 @@
 //  Copyright (c) 2012 Ryan Holmes. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @protocol RHCacheDelegate;
 

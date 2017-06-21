@@ -3,6 +3,8 @@ RHCache
 
 RHCache is a simple in-memory LRU cache. It evicts objects based on an LRU algorithm and optional time-to-live and time-to-idle properties. Like NSCache, RHCache is a mutable collection with an API similar to NSDictionary.
 
+This is a simple fork of the original project, adding support for Cocoapods and Objective-C Generics.
+
 RHCache objects have the following features:
 
 - Least recently used objects are evicted from the cache when the count limit is exceeded. LRU eviction is disabled when the `countLimit` property is 0 (the default value).
