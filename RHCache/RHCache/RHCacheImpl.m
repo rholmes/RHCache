@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Ryan Holmes. All rights reserved.
 //
 
-#import "RHCache.h"
+#import "RHCacheImpl.h"
 #import "RHCacheEntry.h"
 
 @interface RHCache ()
