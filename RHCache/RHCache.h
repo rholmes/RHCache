@@ -35,17 +35,27 @@
 /**
  * Instantiate a new LRU cache with a given maximum size.
  */
++(instancetype) cacheWithCountLimit: (NSUInteger) countLimit;
+
+/**
+ * Instantiate a new LRU cache with a given maximum size, TTL and TTI.
+ */
++(instancetype) cacheWithCountLimit: (NSUInteger) limit timeToLive:(NSTimeInterval) timeToLive timeToIdle: (NSTimeInterval) timeToIdle;
+
+/**
+ * Instantiate a new LRU cache with a given maximum size.
+ */
 - (instancetype) initWithCountLimit: (NSUInteger) limit;
 
 /**
  * Instantiate a new LRU cache with a given maximum size, TTL and TTI.
  */
-- (instancetype) initWithCountLimit: (NSUInteger)limit timeToLive:(NSTimeInterval) timeToLive timeToIdle:(NSTimeInterval) timeToIdle;
+- (instancetype) initWithCountLimit: (NSUInteger) limit timeToLive: (NSTimeInterval) timeToLive timeToIdle: (NSTimeInterval) timeToIdle;
 
 /**
  * Retrieve an object from the cache.
  */
-- (instancetype) objectForKey: (id) key;
+- (ValueType) objectForKey: (id) key;
 
 /**
  * Store an object in the cache.
@@ -89,6 +99,6 @@
  * @param key Its associated key.
  * @return YES if the item should be evicted from the cache. NO to force the item to live on in cache.
  */
-- (BOOL) cache:(RHCache *) cache shouldEvictObject: (NSObject *) object withKey: (NSObject *) key;
+- (BOOL) cache: (RHCache *) cache shouldEvictObject: (NSObject *) object withKey: (NSObject *) key;
 
 @end

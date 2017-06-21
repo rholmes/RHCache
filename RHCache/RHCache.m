@@ -227,5 +227,14 @@
     return (now - _timeToIdle) > [entry accessed];
 }
 
+#pragma mark Factory methods
++(instancetype) cacheWithCountLimit:(NSUInteger)countLimit {
+    return [[[self class] alloc] initWithCountLimit: countLimit];
+}
+
++(instancetype) cacheWithCountLimit:(NSUInteger)limit timeToLive:(NSTimeInterval)timeToLive timeToIdle:(NSTimeInterval)timeToIdle
+{
+    return [[[self class] alloc] initWithCountLimit: limit timeToLive: timeToLive timeToIdle:timeToIdle];
+}
 
 @end
