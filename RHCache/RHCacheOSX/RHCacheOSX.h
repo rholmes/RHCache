@@ -6,7 +6,7 @@
 //  Copyright © 2017 mszaro. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+@import Foundation;
 
 //! Project version number for RHCacheOSX.
 FOUNDATION_EXPORT double RHCacheOSXVersionNumber;

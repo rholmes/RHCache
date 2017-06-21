@@ -6,7 +6,7 @@
 //  Copyright © 2017 mszaro. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import Foundation;
 
 //! Project version number for RHCache.
 FOUNDATION_EXPORT double RHCacheVersionNumber;
